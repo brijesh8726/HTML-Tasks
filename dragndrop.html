@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag & Drop</title>
+    <style type="text/css">
+        .imgBOx {
+            background-image: url("index.jpeg");
+            height: 150px;
+            width: 150px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        .whiteBOx {
+            height: 160px;
+            width: 160px;
+            margin: 10px;
+            background-color: white;
+            display: inline-block;
+            border: 3px;
+
+
+        }
+
+        .hold {
+            border: solid red 4px;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="whiteBOx">
+        <div class="imgBOx" draggable="true"></div>
+    </div>
+    <div class="whiteBOx"></div>
+    <div class="whiteBOx"></div>
+    <div class="whiteBOx"></div>
+
+    <script>
+        const imgbox = document.querySelector('.imgBOx');
+
+        const whiteboxes = document.querySelector('.whiteBOx');
+        //event listeners for dragable element
+        imgbox.addEventListener('dragstart', (e) => {
+
+            console.log("drag start");
+            e.target.className += ' hold';
+            setTimeout(() => {
+                e.target.className = 'hide';
+            }, 0);
+        });
+
+        imgbox.addEventListener('dragend', (e) => {
+
+            console.log("drag end");
+            e.target.className = 'imgBOx';
+        });
+
+        for (whiteBOx of whiteboxes)
+            whiteBOx.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                console.log("dragover trigerred");
+            });
+
+        whiteBOx.addEventListener('dragenter', () => {
+            console.log("dragenter trigerred");
+            // e.target.className += ' dashed'; 
+        });
+        whiteBOx.addEventListener('dragleave', () => {
+            console.log("dragleave trigerred");
+        });
+
+        whiteBOx.addEventListener('drop', (e) => {
+            console.log("drop trigerred");
+            e.target.append(imgbox);
+        });
+
+    </script>
+
+</body>
+
+</html>
